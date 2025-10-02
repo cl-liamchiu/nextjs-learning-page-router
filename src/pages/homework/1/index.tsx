@@ -71,9 +71,7 @@ const Homework1Page = () => {
             value={inputValue}
             onChange={handleInputChange}
             placeholder={
-              mode === "number"
-                ? "Enter numbers only"
-                : "Enter alphabets only"
+              mode === "number" ? "Enter numbers only" : "Enter alphabets only"
             }
             className="w-full max-w-xs rounded border border-gray-300 p-2"
           />

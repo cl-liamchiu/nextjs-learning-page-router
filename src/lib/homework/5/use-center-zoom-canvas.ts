@@ -1,9 +1,5 @@
 import { useRef } from "react";
-import type {
-  ChangeEvent,
-  PointerEvent,
-  RefObject,
-} from "react";
+import type { ChangeEvent, PointerEvent, RefObject } from "react";
 
 const clamp = (val: number, min: number, max: number) =>
   Math.max(min, Math.min(max, val));
@@ -11,7 +7,7 @@ const clamp = (val: number, min: number, max: number) =>
 const useCenterZoomCanvas = (
   canvasRef: RefObject<HTMLCanvasElement | null>,
   canvasW: number,
-  canvasH: number,
+  canvasH: number
 ) => {
   const imgRef = useRef<HTMLImageElement | null>(null);
   const scaleRef = useRef(1);
@@ -111,7 +107,7 @@ const useCenterZoomCanvas = (
       const points = Array.from(activePointers.current.values());
       pinchStartDist.current = Math.hypot(
         points[0].x - points[1].x,
-        points[0].y - points[1].y,
+        points[0].y - points[1].y
       );
       pinchStartScale.current = scaleRef.current;
       const mid = {
@@ -135,12 +131,12 @@ const useCenterZoomCanvas = (
       const points = Array.from(activePointers.current.values());
       const curDist = Math.hypot(
         points[0].x - points[1].x,
-        points[0].y - points[1].y,
+        points[0].y - points[1].y
       );
       const nextScale = clamp(
         (pinchStartScale.current * curDist) / pinchStartDist.current,
         0.1,
-        20,
+        20
       );
 
       const prev = scaleRef.current;

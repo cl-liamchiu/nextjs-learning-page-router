@@ -32,7 +32,7 @@ export function PostProvider({ children }: { children: React.ReactNode }) {
 
   const updatePost = (id: number, updated: Partial<Omit<Post, "id">>) => {
     setPosts((prev) =>
-      prev.map((post) => (post.id === id ? { ...post, ...updated } : post)),
+      prev.map((post) => (post.id === id ? { ...post, ...updated } : post))
     );
   };
 

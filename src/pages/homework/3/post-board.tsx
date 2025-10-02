@@ -27,7 +27,7 @@ const PostBoardPage = () => {
   };
 
   const handleEditChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
     setEditForm((prev) => ({ ...prev, [name]: value }));
@@ -179,7 +179,10 @@ const PostBoardPage = () => {
             </div>
 
             <div>
-              <label htmlFor="content" className="block text-sm font-medium mb-2">
+              <label
+                htmlFor="content"
+                className="block text-sm font-medium mb-2"
+              >
                 Content
               </label>
               <textarea

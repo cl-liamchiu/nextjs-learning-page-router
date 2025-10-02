@@ -13,7 +13,7 @@ const CreatePostPage = () => {
   const router = useRouter();
 
   const handleChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
@@ -60,7 +60,10 @@ const CreatePostPage = () => {
           <div className="rounded-lg bg-neutral-800 p-6 sm:p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="title" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="title"
+                  className="block text-sm font-medium mb-2"
+                >
                   Post Title
                 </label>
                 <input
@@ -76,7 +79,10 @@ const CreatePostPage = () => {
               </div>
 
               <div>
-                <label htmlFor="content" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="content"
+                  className="block text-sm font-medium mb-2"
+                >
                   Post Content
                 </label>
                 <textarea
@@ -92,7 +98,10 @@ const CreatePostPage = () => {
               </div>
 
               <div>
-                <label htmlFor="image" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="image"
+                  className="block text-sm font-medium mb-2"
+                >
                   Add Image (optional)
                 </label>
                 <input
