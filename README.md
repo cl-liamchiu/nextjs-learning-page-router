@@ -38,3 +38,29 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+
+## Markdown Content Pages
+
+Markdown files placed in `src/page-content` automatically become routes at build time. For example, adding `src/page-content/hello-world.md` will produce the page [/hello-world](http://localhost:3000/hello-world).
+
+Each Markdown file should include front matter fields:
+
+```markdown
+---
+title: "Lesson title"
+date: "2025-10-01"
+summary: "Short description used on listing pages."
+---
+
+# Heading
+
+Your content here.
+```
+
+During development:
+
+1. Create or update the Markdown file inside `src/page-content`.
+2. Restart `npm run dev` if the file list changes (editing content hot-reloads automatically).
+3. Visit the corresponding route (e.g., `/hello-world`).
+
+The home page lists all Markdown entries with their summaries for quick navigation.

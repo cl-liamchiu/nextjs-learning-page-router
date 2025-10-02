@@ -1,5 +1,9 @@
 import Image from "next/image";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
+import MarkdownCard from "@/components/markdown/markdown-card";
+import { loadMarkdownIndex, type MarkdownMeta } from "@/lib/content";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,7 +15,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function Home() {
+type HomeProps = {
+  markdown: MarkdownMeta[];
+};
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  const markdown = await loadMarkdownIndex();
+
+  return {
+    props: {
+      markdown,
+    },
+  };
+};
+
+export default function Home({
+  markdown,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div
       className={`${geistSans.className} ${geistMono.className} font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20`}
@@ -62,6 +82,29 @@ export default function Home() {
             Read our docs
           </a>
         </div>
+        <section className="mt-6 flex w-full max-w-2xl flex-col gap-4">
+          <div>
+            <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+              Markdown Lessons
+            </h2>
+            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
+              Each file inside <code>src/page-content</code> becomes a
+              standalone page.
+            </p>
+          </div>
+          {markdown.length === 0 ? (
+            <p className="rounded-lg border border-dashed border-neutral-300 p-6 text-sm text-neutral-500 dark:border-neutral-700 dark:text-neutral-400">
+              No Markdown content yet. Add a file like{" "}
+              <code>src/page-content/hello.md</code> to see it here.
+            </p>
+          ) : (
+            <div className="grid w-full gap-4 sm:grid-cols-2">
+              {markdown.map((meta) => (
+                <MarkdownCard key={meta.slug} meta={meta} />
+              ))}
+            </div>
+          )}
+        </section>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a
