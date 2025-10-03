@@ -1,17 +1,15 @@
 import type { ReactNode } from "react";
+import styles from "./homework-content.module.scss";
 
 interface HomeworkContentProps {
   children: ReactNode;
   className?: string;
 }
 
-const BASE_CLASSNAMES =
-  "mx-auto flex w-full max-w-3xl flex-col gap-6 px-6 sm:px-8";
-
 const HomeworkContent = ({ children, className }: HomeworkContentProps) => {
   const combinedClassName = className
-    ? `${BASE_CLASSNAMES} ${className}`
-    : BASE_CLASSNAMES;
+    ? `${styles.container} ${className}`
+    : styles.container;
 
   return <div className={combinedClassName}>{children}</div>;
 };

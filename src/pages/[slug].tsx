@@ -12,6 +12,7 @@ import {
   loadMarkdown,
   MarkdownNotFoundError,
 } from "@/lib/content";
+import styles from "./markdown-page.module.scss";
 
 type MarkdownPageProps = {
   doc: MarkdownDocument;
@@ -75,17 +76,11 @@ export default function MarkdownPage(
         <title>{meta.title}</title>
         <meta name="description" content={meta.summary} />
       </Head>
-      <article className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-16">
-        <header className="border-b border-neutral-200 pb-6 dark:border-neutral-800">
-          <p className="text-sm uppercase tracking-wide text-neutral-500">
-            {formattedDate}
-          </p>
-          <h1 className="mt-2 text-4xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
-            {meta.title}
-          </h1>
-          <p className="mt-4 text-lg text-neutral-600 dark:text-neutral-300">
-            {meta.summary}
-          </p>
+      <article className={styles.article}>
+        <header className={styles.header}>
+          <p className={styles.meta}>{formattedDate}</p>
+          <h1 className={styles.title}>{meta.title}</h1>
+          <p className={styles.summary}>{meta.summary}</p>
         </header>
         <MarkdownRenderer html={html} />
       </article>

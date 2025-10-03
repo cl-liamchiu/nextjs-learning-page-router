@@ -6,6 +6,7 @@ import HomeworkLayout from "@/components/homework/homework-layout";
 import HomeworkContent from "@/components/homework/homework-content";
 import HomeworkDescription from "@/components/homework/homework-description";
 import { HWData } from "@/lib/homework/1/data";
+import styles from "./homework1.module.scss";
 
 const Homework1Page = () => {
   const [mode, setMode] = useState<"number" | "alpha">("number");
@@ -39,8 +40,8 @@ const Homework1Page = () => {
     <HomeworkLayout>
       <HomeworkContent>
         <HomeworkDescription {...HWData} />
-        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <label className="flex items-center gap-2">
+        <div className={styles.modeToggle}>
+          <label className={styles.radioLabel}>
             <input
               type="radio"
               checked={mode === "number"}
@@ -52,7 +53,7 @@ const Homework1Page = () => {
             />
             Only Numbers
           </label>
-          <label className="flex items-center gap-2">
+          <label className={styles.radioLabel}>
             <input
               type="radio"
               checked={mode === "alpha"}
@@ -65,7 +66,7 @@ const Homework1Page = () => {
             Only Alphabets
           </label>
         </div>
-        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <div className={styles.inputGroup}>
           <input
             type="text"
             value={inputValue}
@@ -73,20 +74,18 @@ const Homework1Page = () => {
             placeholder={
               mode === "number" ? "Enter numbers only" : "Enter alphabets only"
             }
-            className="w-full max-w-xs rounded border border-gray-300 p-2"
+            className={styles.textInput}
           />
           <button
             onClick={() => setSubmittedValue(inputValue)}
-            className="w-full max-w-xs rounded bg-blue-500 p-2 text-white transition-colors hover:bg-blue-600 sm:w-auto"
+            className={styles.submitButton}
           >
             Send
           </button>
         </div>
-        {error && <div className="text-center text-red-500">{error}</div>}
+        {error && <div className={styles.errorMessage}>{error}</div>}
         {submittedValue && (
-          <p className="text-center text-green-600">
-            Welcome: {submittedValue}
-          </p>
+          <p className={styles.successMessage}>Welcome: {submittedValue}</p>
         )}
       </HomeworkContent>
     </HomeworkLayout>

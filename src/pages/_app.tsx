@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "@/styles/globals.scss";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { PostProvider } from "@/lib/homework/3/context/post-provider";

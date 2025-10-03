@@ -1,0 +1,133 @@
+@use "sass:map";
+
+:root {
+  /* Palette */
+  --color-background: #fff;
+  --color-foreground: #171717;
+  --color-surface: #fff;
+  --color-surface-muted: #f5f5f5;
+  --color-border: rgb(148 163 184 / 50%);
+  --color-border-strong: rgb(148 163 184 / 35%);
+  --color-accent: #2563eb;
+  --color-accent-soft: #93c5fd;
+  --color-muted: rgb(55 65 81 / 85%);
+  --color-muted-strong: rgb(37 99 235 / 35%);
+  --color-code-bg: rgb(15 23 42 / 8%);
+  --color-code-bg-strong: rgb(15 23 42 / 12%);
+  --color-focus-ring: #2563eb;
+  --color-text-inverse: #f8fafc;
+  --color-surface-accent: rgb(37 99 235 / 12%);
+  --color-surface-accent-strong: rgb(37 99 235 / 18%);
+  --color-success: #15803d;
+  --color-success-soft: rgb(21 128 61 / 12%);
+  --color-danger: #dc2626;
+  --color-danger-soft: rgb(220 38 38 / 14%);
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans, Arial, Helvetica, sans-serif);
+  --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular);
+
+  /* Radius & Shadows */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --shadow-sm: 0 10px 20px -15px rgb(15 23 42 / 35%);
+
+  /* Spacing scale */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 2.5rem;
+  --space-8: 3rem;
+  --space-9: 3.5rem;
+  --space-10: 4rem;
+  --space-11: 5rem;
+
+  /* Transitions */
+  --transition-base: 150ms ease-in-out;
+
+  /* Legacy aliases */
+  --background: var(--color-background);
+  --foreground: var(--color-foreground);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #0a0a0a;
+    --color-foreground: #ededed;
+    --color-surface: #111827;
+    --color-surface-muted: #1f2937;
+    --color-border: rgb(148 163 184 / 35%);
+    --color-border-strong: rgb(148 163 184 / 20%);
+    --color-accent: #93c5fd;
+    --color-accent-soft: #38bdf8;
+    --color-muted: rgb(226 232 240 / 90%);
+    --color-muted-strong: rgb(147 197 253 / 45%);
+    --color-code-bg: rgb(15 23 42 / 30%);
+    --color-code-bg-strong: rgb(15 23 42 / 55%);
+    --color-focus-ring: #38bdf8;
+    --color-text-inverse: #0b1120;
+    --color-surface-accent: rgb(147 197 253 / 18%);
+    --color-surface-accent-strong: rgb(147 197 253 / 24%);
+    --color-success: #4ade80;
+    --color-success-soft: rgb(74 222 128 / 18%);
+    --color-danger: #f87171;
+    --color-danger-soft: rgb(248 113 113 / 20%);
+    --background: var(--color-background);
+    --foreground: var(--color-foreground);
+  }
+}
+
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+);
+$spacing-scale: (
+  xs: 0.25rem,
+  sm: 0.5rem,
+  md: 0.75rem,
+  lg: 1rem,
+  xl: 1.5rem,
+  "2xl": 2rem,
+  "3xl": 2.5rem,
+  "4xl": 3rem,
+  "5xl": 4rem,
+  "6xl": 5rem,
+);
+
+@mixin respond-to($breakpoint) {
+  $size: map.get($breakpoints, $breakpoint);
+
+  @if $size {
+    @media (min-width: $size) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint `#{$breakpoint}`. Available: #{map-keys($breakpoints)}";
+  }
+}
+
+@mixin flex-center($gap: var(--space-3)) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $gap;
+}
+
+@mixin focus-ring($color: var(--color-focus-ring)) {
+  outline: 2px solid $color;
+  outline-offset: 2px;
+}
+
+@mixin card-surface {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}

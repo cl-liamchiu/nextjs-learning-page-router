@@ -5,6 +5,7 @@ import HomeworkLayout from "@/components/homework/homework-layout";
 import HomeworkContent from "@/components/homework/homework-content";
 import HomeworkDescription from "@/components/homework/homework-description";
 import { HWData } from "@/lib/homework/2/data";
+import styles from "./homework2.module.scss";
 
 const Homework2Page = () => {
   const [components, setComponents] = useState<number[]>([]);
@@ -48,34 +49,37 @@ const Homework2Page = () => {
     <HomeworkLayout>
       <HomeworkContent>
         <HomeworkDescription {...HWData} />
-        <div className="flex flex-wrap items-center justify-center gap-4">
+        <div className={styles.actions}>
           <button
-            className="rounded-lg bg-cyan-400 px-6 py-3 font-bold text-base text-gray-800 shadow-md transition-colors hover:bg-blue-400"
+            type="button"
+            className={`${styles.button} ${styles.buttonAdd}`}
             onClick={addComponent}
           >
             Add Component
           </button>
           <button
-            className="rounded-lg bg-red-400 px-6 py-3 font-bold text-base text-white shadow-md transition-colors hover:bg-red-600"
+            type="button"
+            className={`${styles.button} ${styles.buttonRemove}`}
             onClick={() => removeComponent()}
           >
             Remove Component
           </button>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className={styles.list}>
           {components.map((comp, index) => (
             <div
               key={index}
-              className="mx-auto w-full max-w-xs cursor-pointer rounded border border-gray-200 bg-white px-4 py-4 shadow-sm transition-shadow hover:shadow-md"
+              className={styles.componentCard}
               draggable
               onDragStart={() => handleDragStart(index)}
               onDragEnter={() => handleDragEnter(index)}
               onDragEnd={handleDragEnd}
               onDragOver={(event) => event.preventDefault()}
             >
-              Component {comp}
+              <span className={styles.componentLabel}>Component {comp}</span>
               <button
-                className="float-right rounded bg-red-400 px-3 py-1 text-sm text-white transition-colors hover:bg-red-600"
+                type="button"
+                className={styles.removeButton}
                 onClick={() => removeComponent(index)}
               >
                 ×

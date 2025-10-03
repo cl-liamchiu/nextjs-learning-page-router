@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import styles from "./homework-sidebar.module.scss";
 
 const homeworkLinks = [
   { id: 1, label: "Homework 1", href: "/homework/1" },
@@ -16,27 +17,24 @@ const HomeworkSidebar = () => {
   const pathname = router.pathname;
 
   return (
-    <aside className="w-64 bg-gray-100 p-4">
-      <h2 className="text-xl font-bold mb-4 text-gray-800">
-        Homework Navigation
-      </h2>
-      {homeworkLinks.map((link) => {
-        const isActive =
-          pathname === link.href || pathname.startsWith(`${link.href}/`);
-        return (
-          <Link
-            key={link.id}
-            href={link.href}
-            className={`block p-2 mb-2 rounded transition-colors ${
-              isActive
-                ? "bg-blue-500 text-white"
-                : "text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            {link.label}
-          </Link>
-        );
-      })}
+    <aside className={styles.sidebar}>
+      <h2 className={styles.title}>Homework Navigation</h2>
+      <nav className={styles.nav} aria-label="Homework navigation">
+        {homeworkLinks.map((link) => {
+          const isActive =
+            pathname === link.href || pathname.startsWith(`${link.href}/`);
+
+          const linkClassName = isActive
+            ? `${styles.link} ${styles.linkActive}`
+            : styles.link;
+
+          return (
+            <Link key={link.id} href={link.href} className={linkClassName}>
+              {link.label}
+            </Link>
+          );
+        })}
+      </nav>
     </aside>
   );
 };

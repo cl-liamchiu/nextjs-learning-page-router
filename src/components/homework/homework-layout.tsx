@@ -1,13 +1,12 @@
 import type { ReactNode } from "react";
 import HomeworkSidebar from "./homework-sidebar";
+import styles from "./homework-layout.module.scss";
 
 const HomeworkLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="flex min-h-screen flex-col lg:flex-row">
+    <div className={styles.layout}>
       <HomeworkSidebar />
-      <main className="flex w-full flex-1 justify-center p-6 sm:p-8">
-        {children}
-      </main>
+      <main className={styles.main}>{children}</main>
     </div>
   );
 };

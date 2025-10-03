@@ -1,0 +1,96 @@
+@use "../../../styles/tokens" as *;
+
+.modeToggle {
+  @include respond-to(sm) {
+    flex-direction: row;
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.inputGroup {
+  @include respond-to(sm) {
+    flex-direction: row;
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 500;
+  color: var(--color-foreground);
+}
+
+.textInput {
+  width: 100%;
+  max-width: 18rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-foreground);
+  transition: border-color var(--transition-base),
+    box-shadow var(--transition-base);
+
+  &:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-surface-accent);
+    outline: none;
+  }
+}
+
+.submitButton {
+  @include respond-to(sm) {
+    width: auto;
+  }
+
+  width: 100%;
+  max-width: 18rem;
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  color: var(--color-text-inverse);
+  background: var(--color-accent);
+  cursor: pointer;
+  transition: background-color var(--transition-base),
+    transform var(--transition-base);
+
+  &:hover {
+    background-color: var(--color-accent-soft);
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.errorMessage {
+  text-align: center;
+  color: var(--color-danger);
+  background: var(--color-danger-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  font-weight: 500;
+}
+
+.successMessage {
+  text-align: center;
+  color: var(--color-success);
+  background: var(--color-success-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  font-weight: 500;
+}

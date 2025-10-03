@@ -1,0 +1,82 @@
+@use "../styles/tokens" as *;
+
+.page {
+  @include respond-to(sm) {
+    padding: var(--space-11);
+  }
+
+  display: grid;
+  grid-template-rows: 20px 1fr 20px;
+  place-items: center;
+  min-height: 100vh;
+  padding: var(--space-6);
+  padding-bottom: var(--space-11);
+  gap: var(--space-10);
+  background: var(--color-background);
+}
+
+.main {
+  @include respond-to(sm) {
+    align-items: flex-start;
+  }
+
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.hero {
+  @include respond-to(sm) {
+    flex-direction: row;
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.logo {
+  margin-left: var(--space-2);
+  transition: filter var(--transition-base);
+
+  @media (prefers-color-scheme: dark) {
+    filter: invert(1);
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  width: 100%;
+  max-width: 42rem;
+}
+
+.emptyState {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  background: var(--color-code-bg);
+
+  @media (prefers-color-scheme: dark) {
+    border-color: var(--color-border-strong);
+    color: var(--color-muted);
+    background: var(--color-code-bg-strong);
+  }
+}
+
+.cardGrid {
+  @include respond-to(sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  display: grid;
+  gap: var(--space-4);
+  width: 100%;
+}

@@ -1,0 +1,23 @@
+@use "../../styles/tokens" as *;
+
+.layout {
+  @include respond-to(lg) {
+    flex-direction: row;
+  }
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  @include respond-to(sm) {
+    padding: var(--space-6);
+  }
+
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-5);
+}

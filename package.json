@@ -7,6 +7,7 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
+    "lint:styles": "stylelint \"src/**/*.{css,scss}\"",
     "test": "vitest run"
   },
   "dependencies": {
@@ -32,6 +33,10 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
     "lightningcss": "^1.27.0",
+    "sass": "^1.93.2",
+    "stylelint": "^16.24.0",
+    "stylelint-config-standard-scss": "^16.0.0",
+    "stylelint-order": "^6.0.4",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^3.2.4"

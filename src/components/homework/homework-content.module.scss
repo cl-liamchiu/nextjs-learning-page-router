@@ -1,0 +1,15 @@
+@use "../../styles/tokens" as *;
+
+.container {
+  @include respond-to(sm) {
+    padding-inline: var(--space-6);
+  }
+
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 48rem;
+  gap: var(--space-5);
+  padding-inline: var(--space-5);
+}
