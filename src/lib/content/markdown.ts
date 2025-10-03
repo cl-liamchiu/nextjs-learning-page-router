@@ -5,10 +5,8 @@ import matter from "gray-matter";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
-import type { Options as RehypeSanitizeOptions } from "rehype-sanitize";
 import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
 
@@ -33,24 +31,12 @@ export class MarkdownNotFoundError extends Error {
   }
 }
 
-const sanitizeSchema: RehypeSanitizeOptions = {
-  ...defaultSchema,
-  attributes: {
-    ...defaultSchema.attributes,
-    "*": [...(defaultSchema.attributes?.["*"] ?? []), "className"],
-    a: [...(defaultSchema.attributes?.a ?? []), "target", "rel"],
-    code: [...(defaultSchema.attributes?.code ?? []), "className"],
-    pre: [...(defaultSchema.attributes?.pre ?? []), "className"],
-  },
-};
-
 const markdownProcessor = remark()
   .use(remarkGfm)
-  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(remarkRehype)
   .use(rehypeRaw)
+  .use(rehypeSanitize, defaultSchema)
   .use(rehypeSlug)
-  .use(rehypeAutolinkHeadings, { behavior: "wrap" })
-  .use(rehypeSanitize, sanitizeSchema)
   .use(rehypeStringify);
 
 function assertFrontMatter(
