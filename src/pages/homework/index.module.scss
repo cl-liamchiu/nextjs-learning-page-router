@@ -1,0 +1,20 @@
+@use "../../styles/tokens" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2rem);
+  font-weight: 700;
+  color: var(--color-foreground);
+}
+
+.description {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}

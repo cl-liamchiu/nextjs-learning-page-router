@@ -64,6 +64,8 @@ nextjs-learning/
 └─ tsconfig.json
 ```
 
+[blog](blog/)、[blog/hello-world](blog/hello-world)、[blog/[slug]](blog/123)、[blog/[...segments]](blog/a/b/c)、[docs/hello-world](docs/hello-world)、[docs/[[...slug]]](docs/)、[api/hello](api/hello)
+
 ## 3) Layout
 
 在 React 中，可以透過 `props.children` 來實現**組合模式（Composition Pattern）**。
@@ -206,7 +208,7 @@ function Home() {
   return (
     <ul>
       <li>
-        <Link href="/">Home</Link>
+        <Link href="/home">Home</Link>
       </li>
       <li>
         <Link href="/about">About Us</Link>
@@ -230,6 +232,8 @@ function Home() {
 
 export default Home;
 ```
+
+[Home](home)
 
 如果希望路徑是動態的話，可以使用：
 

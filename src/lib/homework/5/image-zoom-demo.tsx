@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import useCenterZoomCanvas from "@/lib/homework/5/use-center-zoom-canvas";
+import styles from "./image-zoom-demo.module.scss";
 
 const getCanvasSize = () => {
   if (typeof window !== "undefined") {
@@ -44,13 +45,10 @@ const ImageZoomDemo = () => {
   }, [handleWheel]);
 
   return (
-    <div className="max-w-lg mx-auto mt-8 text-center">
-      <h2 className="text-2xl font-bold mb-4">Image Zoom Demo</h2>
-      <div className="mb-4">
-        <label
-          htmlFor="file-input"
-          className="cursor-pointer px-2 py-1 rounded bg-gray-600 text-gray-100 text-sm mr-0 shadow-sm inline-block mb-4"
-        >
+    <div className={styles.container}>
+      <h2 className={styles.title}>Image Zoom Demo</h2>
+      <div className={styles.fileControls}>
+        <label htmlFor="file-input" className={styles.fileLabel}>
           選擇檔案
         </label>
         <input
@@ -63,37 +61,27 @@ const ImageZoomDemo = () => {
             setFilename(event.target.files?.[0]?.name || "");
           }}
           id="file-input"
-          className="hidden"
+          className={styles.fileInput}
         />
-        <span className="text-sm text-white rounded px-2 py-1 min-w-32 text-left inline-block mb-4">
-          {filename || "未選擇任何檔案"}
-        </span>
+        <span className={styles.fileName}>{filename || "未選擇任何檔案"}</span>
       </div>
-      <div className="mb-2 text-gray-400">
+      <div className={styles.hint}>
         Use mouse wheel to zoom (cursor-centered), drag to pan
       </div>
-      <div className="inline-block" style={{ overscrollBehavior: "contain" }}>
+      <div className={styles.canvasWrapper}>
         <canvas
           ref={canvasRef}
           width={canvasSize}
           height={canvasSize}
-          className="border border-gray-300"
-          style={{
-            background: "#232323",
-            cursor: "grab",
-            touchAction: "none",
-          }}
+          className={styles.canvas}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerLeave={handlePointerLeave}
         />
       </div>
-      <div className="mt-4">
-        <button
-          onClick={reset}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
+      <div className={styles.actions}>
+        <button onClick={reset} className={styles.resetButton}>
           Reset View
         </button>
       </div>

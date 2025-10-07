@@ -1,0 +1,132 @@
+@use "../../../styles/tokens" as *;
+
+.container {
+  margin: var(--space-6) auto 0;
+  max-width: 32rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 1.75rem);
+  font-weight: 700;
+  color: var(--color-foreground);
+}
+
+.fileRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.fileLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-foreground);
+  color: var(--color-text-inverse);
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform var(--transition-base), filter var(--transition-base);
+
+  &:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.fileName {
+  min-width: 8rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  color: var(--color-foreground);
+  font-size: 0.875rem;
+  text-align: left;
+  box-shadow: var(--shadow-sm);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.actionButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  color: var(--color-text-inverse);
+  cursor: pointer;
+  transition: transform var(--transition-base), filter var(--transition-base);
+
+  &:disabled {
+    background: var(--color-border);
+    color: var(--color-muted);
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.rotateButton {
+  background: var(--color-accent);
+}
+
+.blurButton {
+  background: var(--color-success);
+}
+
+.downloadButton {
+  background: #7c3aed;
+}
+
+.canvas {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #232323;
+}

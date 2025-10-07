@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import styles from "./canvas-image-editor.module.scss";
 
 const getCanvasSize = () => {
   if (typeof window !== "undefined") {
@@ -96,13 +97,10 @@ const CanvasImageEditor = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-8 text-center">
-      <h2 className="text-2xl font-bold mb-4">Canvas Image Editor</h2>
-      <div className="mb-4 flex items-center justify-center">
-        <label
-          htmlFor="file-input"
-          className="cursor-pointer px-2 py-1 rounded bg-gray-600 text-gray-100 text-sm mr-0 shadow-sm inline-block"
-        >
+    <div className={styles.container}>
+      <h2 className={styles.title}>Canvas Image Editor</h2>
+      <div className={styles.fileRow}>
+        <label htmlFor="file-input" className={styles.fileLabel}>
           選擇檔案
         </label>
         <input
@@ -111,31 +109,29 @@ const CanvasImageEditor = () => {
           accept="image/*"
           onChange={handleFileChange}
           id="file-input"
-          className="hidden"
+          className={styles.fileInput}
         />
-        <span className="text-sm text-white rounded px-2 py-1 min-w-32 text-left inline-block">
-          {filename || "未選擇任何檔案"}
-        </span>
+        <span className={styles.fileName}>{filename || "未選擇任何檔案"}</span>
       </div>
-      <div className="mb-4">
+      <div className={styles.controls}>
         <button
           onClick={handleRotate}
           disabled={!imageLoaded}
-          className="mr-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className={`${styles.actionButton} ${styles.rotateButton}`}
         >
           Rotate 90°
         </button>
         <button
           onClick={handleBlur}
           disabled={!imageLoaded}
-          className="mr-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className={`${styles.actionButton} ${styles.blurButton}`}
         >
           Blur
         </button>
         <button
           onClick={handleDownload}
           disabled={!imageLoaded}
-          className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className={`${styles.actionButton} ${styles.downloadButton}`}
         >
           Download
         </button>
@@ -144,8 +140,7 @@ const CanvasImageEditor = () => {
         ref={canvasRef}
         width={canvasSize}
         height={canvasSize}
-        className="border border-gray-300"
-        style={{ background: "#232323" }}
+        className={styles.canvas}
       />
     </div>
   );

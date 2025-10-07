@@ -18,6 +18,26 @@ tags: ["Next.js", "Rendering", "Data Fetching", "SSR", "SSG", "ISR", "CSR"]
 - **缺點**：每次都要計算，效能較差
 - **適合情境**：Dashboard、個人化頁面、即時數據
 
+```tsx
+import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
+
+export const getServerSideProps: GetServerSideProps<{
+  timeData: string;
+}> = async () => {
+  const now = new Date();
+  const timeData = now.toLocaleString("zh-TW", { timeZone: "Asia/Taipei" });
+  return { props: { timeData } };
+};
+
+export default function Page({
+  timeData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  return <div>{timeData}</div>;
+}
+```
+
+[Example](/data-fetching/ssr)
+
 ---
 
 ### 2. **SSG (Static Site Generation)**
@@ -28,6 +48,26 @@ tags: ["Next.js", "Rendering", "Data Fetching", "SSR", "SSG", "ISR", "CSR"]
 - **優點**：快（只傳檔案）、SEO 佳、可 CDN 快取
 - **缺點**：內容固定，更新需要重新 build
 - **適合情境**：Blog、Docs、產品頁
+
+```tsx
+import type { InferGetStaticPropsType, GetStaticProps } from "next";
+
+export const getStaticProps: GetStaticProps<{
+  timeData: string;
+}> = async () => {
+  const now = new Date();
+  const timeData = now.toLocaleString("zh-TW", { timeZone: "Asia/Taipei" });
+  return { props: { timeData } };
+};
+
+export default function Page({
+  timeData,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  return <div>{timeData}</div>;
+}
+```
+
+[Example](/data-fetching/ssg)
 
 ---
 
@@ -44,6 +84,26 @@ tags: ["Next.js", "Rendering", "Data Fetching", "SSR", "SSG", "ISR", "CSR"]
 - **優點**：兼顧效能與即時性
 - **缺點**：內容可能會有短暫過期狀態
 - **適合情境**：新聞首頁、排行榜、電商商品頁
+
+```tsx
+import type { InferGetStaticPropsType, GetStaticProps } from "next";
+
+export const getStaticProps: GetStaticProps<{
+  timeData: string;
+}> = async () => {
+  const now = new Date();
+  const timeData = now.toLocaleString("zh-TW", { timeZone: "Asia/Taipei" });
+  return { props: { timeData }, revalidate: 10 };
+};
+
+export default function Page({
+  timeData,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  return <div>{timeData}</div>;
+}
+```
+
+[Example](/data-fetching/isr)
 
 ---
 
