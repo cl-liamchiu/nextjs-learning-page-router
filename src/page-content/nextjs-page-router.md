@@ -22,15 +22,14 @@ tags: ["Next.js", "Routing", "Page Router"]
 - **Nested routes**：
   - `/pages/blog/hello-world.tsx` → `/blog/hello-world`
 - **Dynamic Routes**：
-  - `/pages/posts/[id].tsx` → `/posts/123`（`{ slug: '123' }`）
+  - `/pages/posts/[id].tsx` → `/posts/123`
   - **Catch‑all**：
-    - `/pages/docs/[...slug].tsx` → `/docs/a/b/c`（`{ slug: ['a', 'b', 'c'] }`）
+    - `/pages/docs/[...slug].tsx` → `/docs/a/b/c`
   - **Optional catch‑all**：
-    - `/pages/docs/[[...slug]].tsx`（`/docs` 與子路徑都匹配，`/docs` -> `{ slug: undefined }`）
+    - `/pages/docs/[[...slug]].tsx`（`/docs` 與子路徑都匹配）
     - 不能與 index、catch-all 同時存在。
 - 特殊檔案：
   - `_app.tsx`：包住所有頁面（global layout、狀態、樣式）
-  - `_document.tsx`：自訂 HTML 結構（<html>、<body>）
   - `404.tsx`、`500.tsx`、`_error.tsx`：錯誤頁
   - `/pages/api/*`：API Routes（伺服器端）
 
