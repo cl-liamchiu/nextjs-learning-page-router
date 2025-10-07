@@ -5,6 +5,7 @@ export const getStaticProps: GetStaticProps<{
 }> = async () => {
   const now = new Date();
   const timeData = now.toLocaleString("zh-TW", { timeZone: "Asia/Taipei" });
+  console.log("[ISR build at]", timeData); // <— 看伺服器端輸出
   return { props: { timeData }, revalidate: 10 };
 };
 
