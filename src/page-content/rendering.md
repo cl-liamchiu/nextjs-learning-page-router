@@ -7,7 +7,7 @@ tags: ["Next.js", "Rendering", "Data Fetching", "SSR", "SSG", "ISR", "CSR"]
 
 # Next.js Rendering & Data Fetching 筆記
 
-## Rendering 模式
+## Rendering 模式以及對應的 Data Fetching 方法
 
 ### 1. **SSR (Server-Side Rendering)**
 
@@ -116,24 +116,195 @@ export default function Page({
 - **缺點**：SEO 不佳，首次渲染慢
 - **適合情境**：聊天室、即時股票、內部工具
 
----
+```tsx
+import { useEffect, useState } from "react";
 
-## Data Fetching 筆記
+export default function Page() {
+  const [timeData, setTimeData] = useState<string>("");
 
-- **`getStaticProps`**：在 build 階段執行，只能在伺服器端跑，不會出現在瀏覽器 bundle，適合預先生成內容。
-- **`getServerSideProps`**：在每次 request 時執行，能依照 request context 回傳不同資料。
-- **API Routes (`/api`)**：給 Client Side 或第三方服務呼叫；Server Side 不需要透過 API Route，多餘。
-- **lib/ 資料夾**：建議把 fetch 資料的邏輯抽到這裡，方便 API Routes 與 SSR/SSG 共用。
-- **瀏覽器行為**：
+  useEffect(() => {
+    const now = new Date();
+    const time = now.toLocaleString("zh-TW", { timeZone: "Asia/Taipei" });
+    setTimeData(time);
+  }, []);
 
-  - HTML/JS 檔案存在 **Server/CDN**，不是 LocalStorage
-  - 瀏覽器下載 JS 後會放在 **記憶體 (RAM)** 執行，並快取到 **磁碟 (Disk Cache)**，下次載入更快。
+  return <div>{timeData}</div>;
+}
+```
 
----
+[Example](/data-fetching/csr)
 
-## 比喻
+## Automatic Static Optimization
 
-- **SSR**：餐廳現做 → 新鮮但要等
-- **SSG**：便利商店便當 → 立刻拿到，但不是最新
-- **ISR**：便利商店便當 + 定時補貨 → 快又能更新
-- **CSR**：到家自己煮 → 要等資料抓回來才能吃
+- Next.js 在 build 階段會自動判斷頁面是否能靜態化。
+  若頁面沒有使用 `getServerSideProps`，
+  便會自動進行 靜態預先產生（Static Generation, SSG），這稱為自動靜態最佳化 (Automatic Static Optimization)。
+- 如果頁面有部分地方使用到 `useEffect` 或其他 client-side code，但沒有使用 `getServerSideProps`，
+  Next.js 仍然會將整個頁面靜態化，並在瀏覽器端執行那些 client-side code。
+- 這樣的機制讓開發者不需要特別指定，就能享受到靜態頁面的效能優勢，同時也能在需要時使用 client-side code 來增強互動性。
+- 例如：
+
+  1. 剛剛例子中的 CSR 範例，
+     雖然頁面內容是透過 `useEffect` 在 client 端取得，但因為沒有使用 `getServerSideProps`， Next.js 仍會在 build 階段預先輸出整個靜態 HTML（不含時間內容），並於瀏覽器端執行 `useEffect` 來更新實際時間。。
+
+     ```tsx
+     import { useEffect, useState } from "react";
+
+     export default function Page() {
+       const [timeData, setTimeData] = useState<string>("");
+
+       useEffect(() => {
+         const now = new Date();
+         const time = now.toLocaleString("zh-TW", { timeZone: "Asia/Taipei" });
+         setTimeData(time);
+       }, []);
+
+       return (
+         <div>
+           <h1>CSR (Client Side Rendering)</h1>
+           <ul>
+             <li>本頁使用 CSR（Client Side Rendering）技術，時間每秒更新。</li>
+             <li>重新整理頁面會立即獲得最新時間。</li>
+           </ul>
+           <div style={{ fontSize: "2rem", fontWeight: "bold" }}>
+             {timeData}
+           </div>
+         </div>
+       );
+     }
+     ```
+
+  2. 動態路由頁面（如 `[slug].tsx`）如果沒有使用 `getServerSideProps`，他也會預先生成靜態頁面，但跟 slug 有關的邏輯，因為不會預先知道 slug 是甚麼，所以會在 client 端執行相關邏輯來處理。
+
+     ```tsx
+     import React from "react";
+     import { useRouter } from "next/router";
+
+     const DynamicPage: React.FC = () => {
+       const router = useRouter();
+       console.log("slug:", router.query.slug);
+
+       return (
+         <main style={{ padding: "2rem" }}>
+           <h1>Dynamic Page: {router.query.slug}</h1>
+         </main>
+       );
+     };
+
+     export default DynamicPage;
+     ```
+
+## 動態路由下的 SSG
+
+- 動態路由頁面（如 `[id].tsx`）如果使用 `getStaticProps`，還需要搭配 `getStaticPaths` 來指定哪些路由參數需要預先生成靜態頁面。
+- `getStaticPaths` 會在 build 階段執行，回傳一組路由參數清單，
+  Next.js 會根據這些參數來生成對應的靜態頁面。
+- 例如：
+
+```tsx
+import { GetStaticPaths, GetStaticProps } from "next";
+import React from "react";
+
+interface Props {
+  slug: string;
+}
+
+const DynamicPage: React.FC<Props> = ({ slug }) => {
+  return (
+    <main style={{ padding: "2rem" }}>
+      <h1>Dynamic Page: {slug}</h1>
+    </main>
+  );
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  // 範例：預先產生這兩個 slug 的頁面
+  const paths = [{ params: { slug: "apple" } }, { params: { slug: "banana" } }];
+  return { paths, fallback: "blocking" };
+};
+
+export const getStaticProps: GetStaticProps<Props> = async (context) => {
+  const { slug } = context.params as { slug: string };
+  return {
+    props: { slug },
+  };
+};
+
+export default DynamicPage;
+```
+
+- 在這個例子中，`getStaticPaths` 指定了兩個路由參數 `apple` 和 `banana`，Next.js 會在 build 階段生成這兩個靜態頁面。
+- `fallback: "blocking"` 表示如果使用者請求的 slug 不在預先生成的清單中，Next.js 會在伺服器端生成該頁面，並在生成完成後回傳給使用者，同時將該頁面加入到靜態頁面中以供未來使用。
+- 如果是 `fallback: false`，則表示只有預先生成的 slug 可以被訪問，其他的會回傳 404。
+- `fallback: true` 則會先回傳一個 loading 狀態的頁面，然後在背景生成頁面，生成完成後再更新頁面內容。
+
+[Example](/data-fetching/apple)
+
+## 表單操作
+
+### 表單處理方式
+
+- 在 Page Router 架構中，表單多半由 **Client Side Rendering (CSR)** 處理。
+- 這是因為表單需要即時回應使用者輸入、顯示狀態或錯誤訊息。
+- 透過 React 的狀態管理 (`useState`) 與事件監聽 (`onSubmit`)，可讓整個流程流暢且互動性高。
+
+### 表單送出流程
+
+1. 使用者輸入資料
+2. onSubmit 攔截表單送出 (event.preventDefault())
+3. 將表單內容轉為物件並以 fetch() 送至 /api/submit
+4. API Route 在伺服器端接收、處理、回傳 JSON
+5. 前端更新畫面並顯示結果（例如：提交後的 ID）
+
+### 範例
+
+```tsx
+import { FormEvent, useState } from "react";
+
+export default function Page() {
+  const [id, setId] = useState("");
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const response = await fetch("/api/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(Object.fromEntries(formData)),
+    });
+
+    // Handle response if necessary
+    const data = await response.json();
+    console.log("Response from server:", data);
+    setId(data.id);
+  }
+
+  return (
+    <form onSubmit={onSubmit}>
+      <input type="text" name="name" />
+      <button type="submit">Submit</button>
+      {id && <div>Submitted ID: {id}</div>}
+    </form>
+  );
+}
+```
+
+```ts
+import type { NextApiRequest, NextApiResponse } from "next";
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { name } = req.body;
+  console.log("req.body", req.body);
+  console.log("Received Name:", name);
+  const id = Math.random().toString(36).substring(2, 15);
+  res.status(200).json({ id, name });
+}
+```
+
+[Example](/submit-form)
