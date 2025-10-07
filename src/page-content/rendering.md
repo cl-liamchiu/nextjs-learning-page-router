@@ -134,6 +134,19 @@ export default function Page() {
 
 [Example](/data-fetching/csr)
 
+## SEO 友善
+
+相較於 React，Next.js 更加 SEO 友善。
+原因在於搜尋引擎（例如 Google）在收錄網站內容時，會透過自動化的爬蟲（crawler）或檢索器（indexer）去抓取網頁的 HTML 資料，並依據網頁內容建立索引，最後再根據使用者輸入的關鍵字呈現搜尋結果。
+
+然而，傳統的 React 應用程式屬於 Client-Side Rendering（CSR），頁面內容是由瀏覽器在載入後再透過 JavaScript 動態生成。
+這表示若搜尋引擎的爬蟲無法或未執行 JavaScript，就無法看到實際的內容，只會看到一個幾乎空白的 HTML 結構，導致 無法正確收錄。
+
+Next.js 則不同。它支援 Server-Side Rendering（SSR） 與 Static Site Generation（SSG），能在伺服器端預先生成完整的 HTML，並在頁面請求時直接傳給瀏覽器。
+因此搜尋引擎爬蟲可以直接讀取到完整內容，使網頁更容易被索引與排名，達成 SEO 友善 的效果。
+
+[React 網頁](https://cl-liamchiu.github.io/react-learning/)
+
 ## Automatic Static Optimization
 
 - Next.js 在 build 階段會自動判斷頁面是否能靜態化。

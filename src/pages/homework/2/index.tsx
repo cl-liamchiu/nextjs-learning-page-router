@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import HomeworkLayout from "@/components/homework/homework-layout";
 import HomeworkContent from "@/components/homework/homework-content";
 import HomeworkDescription from "@/components/homework/homework-description";
 import { HWData } from "@/lib/homework/2/data";
@@ -46,49 +45,47 @@ const Homework2Page = () => {
   };
 
   return (
-    <HomeworkLayout>
-      <HomeworkContent>
-        <HomeworkDescription {...HWData} />
-        <div className={styles.actions}>
-          <button
-            type="button"
-            className={`${styles.button} ${styles.buttonAdd}`}
-            onClick={addComponent}
+    <HomeworkContent>
+      <HomeworkDescription {...HWData} />
+      <div className={styles.actions}>
+        <button
+          type="button"
+          className={`${styles.button} ${styles.buttonAdd}`}
+          onClick={addComponent}
+        >
+          Add Component
+        </button>
+        <button
+          type="button"
+          className={`${styles.button} ${styles.buttonRemove}`}
+          onClick={() => removeComponent()}
+        >
+          Remove Component
+        </button>
+      </div>
+      <div className={styles.list}>
+        {components.map((comp, index) => (
+          <div
+            key={index}
+            className={styles.componentCard}
+            draggable
+            onDragStart={() => handleDragStart(index)}
+            onDragEnter={() => handleDragEnter(index)}
+            onDragEnd={handleDragEnd}
+            onDragOver={(event) => event.preventDefault()}
           >
-            Add Component
-          </button>
-          <button
-            type="button"
-            className={`${styles.button} ${styles.buttonRemove}`}
-            onClick={() => removeComponent()}
-          >
-            Remove Component
-          </button>
-        </div>
-        <div className={styles.list}>
-          {components.map((comp, index) => (
-            <div
-              key={index}
-              className={styles.componentCard}
-              draggable
-              onDragStart={() => handleDragStart(index)}
-              onDragEnter={() => handleDragEnter(index)}
-              onDragEnd={handleDragEnd}
-              onDragOver={(event) => event.preventDefault()}
+            <span className={styles.componentLabel}>Component {comp}</span>
+            <button
+              type="button"
+              className={styles.removeButton}
+              onClick={() => removeComponent(index)}
             >
-              <span className={styles.componentLabel}>Component {comp}</span>
-              <button
-                type="button"
-                className={styles.removeButton}
-                onClick={() => removeComponent(index)}
-              >
-                ×
-              </button>
-            </div>
-          ))}
-        </div>
-      </HomeworkContent>
-    </HomeworkLayout>
+              ×
+            </button>
+          </div>
+        ))}
+      </div>
+    </HomeworkContent>
   );
 };
 

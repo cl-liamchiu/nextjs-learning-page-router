@@ -26,7 +26,9 @@ export const getStaticPaths: GetStaticPaths<MarkdownPageParams> = async () => {
   const slugs = await listMarkdownSlugs();
 
   return {
-    paths: slugs.map((slug) => ({ params: { slug } })),
+    paths: slugs
+      .filter((slug) => slug !== "homework") // Exclude conflicting path
+      .map((slug) => ({ params: { slug } })),
     fallback: false,
   };
 };

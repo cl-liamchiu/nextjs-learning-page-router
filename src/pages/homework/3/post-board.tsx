@@ -3,7 +3,6 @@
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/router";
-import HomeworkLayout from "@/components/homework/homework-layout";
 import HomeworkContent from "@/components/homework/homework-content";
 import Modal from "@/components/homework/3/modal";
 import { usePostContext } from "@/lib/homework/3/context/post-provider";
@@ -86,7 +85,7 @@ const PostBoardPage = () => {
   };
 
   return (
-    <HomeworkLayout>
+    <>
       <HomeworkContent className={styles.boardContent}>
         <div className={styles.wrapper}>
           <div className={styles.header}>
@@ -207,7 +206,7 @@ const PostBoardPage = () => {
           </form>
         )}
       </Modal>
-    </HomeworkLayout>
+    </>
   );
 };
 

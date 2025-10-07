@@ -32,15 +32,11 @@
 }
 
 .buttonAdd {
-  background: linear-gradient(
-    135deg,
-    var(--color-surface-accent),
-    var(--color-accent)
-  );
+  background: var(--color-accent);
   color: var(--color-text-inverse);
 
   &:hover {
-    background: var(--color-accent);
+    background: #2563eb;
   }
 }
 

@@ -10,6 +10,7 @@ const homeworkLinks = [
   { id: 3, label: "Homework 3", href: "/homework/3" },
   { id: 4, label: "Homework 4", href: "/homework/4" },
   { id: 5, label: "Homework 5", href: "/homework/5" },
+  { id: 6, label: "Home", href: "/" },
 ];
 
 const HomeworkSidebar = () => {

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import type { ChangeEvent } from "react";
-import HomeworkLayout from "@/components/homework/homework-layout";
 import HomeworkContent from "@/components/homework/homework-content";
 import HomeworkDescription from "@/components/homework/homework-description";
 import { HWData } from "@/lib/homework/1/data";
@@ -37,58 +36,56 @@ const Homework1Page = () => {
   };
 
   return (
-    <HomeworkLayout>
-      <HomeworkContent>
-        <HomeworkDescription {...HWData} />
-        <div className={styles.modeToggle}>
-          <label className={styles.radioLabel}>
-            <input
-              type="radio"
-              checked={mode === "number"}
-              onChange={() => {
-                setInputValue("");
-                setSubmittedValue("");
-                setMode("number");
-              }}
-            />
-            Only Numbers
-          </label>
-          <label className={styles.radioLabel}>
-            <input
-              type="radio"
-              checked={mode === "alpha"}
-              onChange={() => {
-                setInputValue("");
-                setSubmittedValue("");
-                setMode("alpha");
-              }}
-            />
-            Only Alphabets
-          </label>
-        </div>
-        <div className={styles.inputGroup}>
+    <HomeworkContent>
+      <HomeworkDescription {...HWData} />
+      <div className={styles.modeToggle}>
+        <label className={styles.radioLabel}>
           <input
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder={
-              mode === "number" ? "Enter numbers only" : "Enter alphabets only"
-            }
-            className={styles.textInput}
+            type="radio"
+            checked={mode === "number"}
+            onChange={() => {
+              setInputValue("");
+              setSubmittedValue("");
+              setMode("number");
+            }}
           />
-          <button
-            onClick={() => setSubmittedValue(inputValue)}
-            className={styles.submitButton}
-          >
-            Send
-          </button>
-        </div>
-        {error && <div className={styles.errorMessage}>{error}</div>}
-        {submittedValue && (
-          <p className={styles.successMessage}>Welcome: {submittedValue}</p>
-        )}
-      </HomeworkContent>
-    </HomeworkLayout>
+          Only Numbers
+        </label>
+        <label className={styles.radioLabel}>
+          <input
+            type="radio"
+            checked={mode === "alpha"}
+            onChange={() => {
+              setInputValue("");
+              setSubmittedValue("");
+              setMode("alpha");
+            }}
+          />
+          Only Alphabets
+        </label>
+      </div>
+      <div className={styles.inputGroup}>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder={
+            mode === "number" ? "Enter numbers only" : "Enter alphabets only"
+          }
+          className={styles.textInput}
+        />
+        <button
+          onClick={() => setSubmittedValue(inputValue)}
+          className={styles.submitButton}
+        >
+          Send
+        </button>
+      </div>
+      {error && <div className={styles.errorMessage}>{error}</div>}
+      {submittedValue && (
+        <p className={styles.successMessage}>Welcome: {submittedValue}</p>
+      )}
+    </HomeworkContent>
   );
 };
 
