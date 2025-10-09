@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { addTodo, completeTodo, setFilter, selectFilteredTodos } from "@/store/todosSlice";
+import {
+  addTodo,
+  completeTodo,
+  setFilter,
+  selectFilteredTodos,
+} from "@/store/todos-slice";
 import styles from "./todos.module.scss";
 
 export default function TodosPage() {

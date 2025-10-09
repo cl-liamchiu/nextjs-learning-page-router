@@ -1,13 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./counter-slice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import todoReducer from "./todosSlice";
 import { todosApi } from "./api/todos-api";
+import counterReducer from "./counter-slice";
+import todoReducer from "./todos-slice";
+import productsReducer from "./products-slice";
+import cartReducer from "./cart-slice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     todos: todoReducer,
+    cart: cartReducer,
+    products: productsReducer,
     [todosApi.reducerPath]: todosApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

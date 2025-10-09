@@ -1,0 +1,33 @@
+@use "../../../styles/tokens" as *;
+
+.ctaWrapper {
+  text-align: center;
+}
+
+.ctaLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition-base),
+    transform var(--transition-base), box-shadow var(--transition-base);
+
+  &:hover {
+    background-color: var(--color-accent-soft);
+    transform: translateY(-1px);
+    box-shadow: 0 18px 30px -20px rgb(37 99 235 / 45%);
+  }
+
+  &:focus-visible {
+    @include focus-ring(var(--color-accent));
+  }
+}
