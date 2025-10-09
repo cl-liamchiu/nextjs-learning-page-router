@@ -3,13 +3,19 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import HomeworkLayout from "@/components/homework/homework-layout";
 import { PostProvider } from "@/lib/homework/3/context/post-provider";
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isHomework3Route = router.pathname.startsWith("/homework/3");
   const isHomeworkPage = router.pathname.startsWith("/homework");
 
-  const content = <Component {...pageProps} />;
+  const content = (
+    <Provider store={store}>
+      <Component {...pageProps} />
+    </Provider>
+  );
 
   if (isHomework3Route) {
     return (

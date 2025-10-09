@@ -1,0 +1,138 @@
+@use "@/styles/tokens" as *;
+
+.todoAppContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-background);
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: var(--color-on-background);
+}
+
+.inputContainer {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.todoInput {
+  padding: 12px;
+  font-size: 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  flex: 1;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  transition: border-color 0.3s;
+}
+
+.todoInput:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.addButton {
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  color: var(--color-on-primary);
+  background-color: var(--color-accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, box-shadow 0.3s;
+  background: var(--color-accent);
+
+  &:hover {
+    background: #2563eb;
+  }
+
+  &:active {
+    background-color: var(--color-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.filterSelect {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+}
+
+.todoList {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.todoItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  margin-bottom: 12px;
+  background-color: var(--color-surface);
+  transition: background-color 0.3s;
+}
+
+.todoItem:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.todoText {
+  flex: 1;
+  font-size: 1.1rem;
+  color: var(--color-on-surface);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.unDoneButton {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: white;
+  transition: background-color 0.3s;
+}
+
+.completeButton {
+  @extend .unDoneButton;
+  background-color: var(--color-success);
+  color: var(--color-on-success);
+}
+
+.deleteButton {
+  padding: 8px 12px;
+  font-size: 1rem;
+  color: var(--color-on-error);
+  background-color: var(--color-error);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.deleteButton:hover {
+  background-color: var(--color-error-dark);
+}
