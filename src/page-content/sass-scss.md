@@ -1,6 +1,6 @@
 ---
 title: Sass vs SCSS 筆記
-date: "2025-10-14"
+date: "2025-10-13"
 summary: 說明 Sass 與 SCSS 的歷史、差別與演變，理解為何 SCSS 成為主流語法。
 tags: [Sass, SCSS, CSS, Frontend]
 ---

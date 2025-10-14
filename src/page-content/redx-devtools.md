@@ -1,6 +1,6 @@
 ---
 title: Redux DevTools 使用筆記
-date: "2025-10-14"
+date: "2025-10-13"
 summary: Redux DevTools 的安裝、設定、介面說明與進階功能（含 trace、Test 分頁、自動測試模板）完整整理。
 tags: [Redux, DevTools, Debug, RTK, Frontend]
 ---
