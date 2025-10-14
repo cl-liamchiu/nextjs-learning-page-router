@@ -235,7 +235,7 @@ const total = numbers.reduce(addNumbers, 0); // 15
 - 範例：
   ```ts
   store.dispatch({ type: "todos/todoAdded", payload: "Buy milk" });
-  console.log(store.getState()); // { items: ["Buy milk"] }
+  console.log(store.getState()); // { todos: { items: ["Buy milk"] } }
   ```
   使用 Action Creators：
   ```ts
@@ -246,7 +246,7 @@ const total = numbers.reduce(addNumbers, 0); // 15
     };
   };
   store.dispatch(addTodo("Buy milk"));
-  console.log(store.getState()); // { items: ["Buy milk"] }
+  console.log(store.getState()); // { todos: { items: ["Buy milk"] } }
   ```
 
 #### 6️⃣ **Selectors**：
