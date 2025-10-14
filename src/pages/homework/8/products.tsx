@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./products.module.scss";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { fetchProducts } from "@/store/products-slice";
+import { fetchProducts } from "@/store/products-reducer";
 import { addToCart } from "@/store/cart-slice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,7 +20,7 @@ const ProductsPage = () => {
   const products = useAppSelector((state) => state.products.items);
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts);
   }, [dispatch]);
 
   const handleAddToCart = (product: Product) => {

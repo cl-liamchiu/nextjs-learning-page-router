@@ -5,7 +5,7 @@ import {
   completeTodo,
   setFilter,
   selectFilteredTodos,
-} from "@/store/todos-slice";
+} from "@/store/todos-reducer";
 import styles from "./todos.module.scss";
 
 export default function TodosPage() {

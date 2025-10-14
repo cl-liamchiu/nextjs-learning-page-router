@@ -1,22 +1,28 @@
-import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { todosApi } from "./api/todos-api";
-import counterReducer from "./counter-slice";
-import todoReducer from "./todos-slice";
-import productsReducer from "./products-slice";
+import {
+  applyMiddleware,
+  legacy_createStore as createStore,
+  combineReducers,
+} from "redux";
+import { composeWithDevTools } from "@redux-devtools/extension";
+import { thunk } from "redux-thunk";
+import productsReducer from "./products-reducer";
 import cartReducer from "./cart-slice";
+import todosReducer from "./todos-reducer";
 
-export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-    todos: todoReducer,
-    cart: cartReducer,
-    products: productsReducer,
-    [todosApi.reducerPath]: todosApi.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(todosApi.middleware),
+const allReducer = combineReducers({
+  todos: todosReducer,
+  cart: cartReducer,
+  products: productsReducer,
 });
+
+const middlewareEnhancer = applyMiddleware(thunk);
+const composedEnhancer = composeWithDevTools({
+  trace: true,        // 開啟 Trace
+  traceLimit: 25,     // 最多顯示 25 層 stack
+})(middlewareEnhancer);
+
+export const store = createStore(allReducer, composedEnhancer);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
