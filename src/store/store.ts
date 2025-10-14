@@ -9,11 +9,13 @@ import { thunk } from "redux-thunk";
 import productsReducer from "./products-reducer";
 import cartReducer from "./cart-slice";
 import todosReducer from "./todos-reducer";
+import counterReducer from "./counter-slice";
 
 const allReducer = combineReducers({
   todos: todosReducer,
   cart: cartReducer,
   products: productsReducer,
+  counter: counterReducer,
 });
 
 const middlewareEnhancer = applyMiddleware(thunk);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./shopping-cart.module.scss";
@@ -90,7 +90,9 @@ const ShoppingCart = () => {
         </div>
         <div className={styles.summaryTotal}>
           <span>Total Cost </span>
-          <span>${Number.isNaN(calculateTotal()) ? 0 : calculateTotal().toFixed(2)}</span>
+          <span>
+            ${Number.isNaN(calculateTotal()) ? 0 : calculateTotal().toFixed(2)}
+          </span>
         </div>
         <Link href="/homework/8/products" className={styles.continueShopping}>
           Continue Shopping
