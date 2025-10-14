@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
+import type { Element, Root } from "hast";
 import matter from "gray-matter";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
@@ -9,6 +10,7 @@ import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
+import { visit } from "unist-util-visit";
 
 export const CONTENT_DIR = path.join(process.cwd(), "src/page-content");
 
@@ -31,10 +33,59 @@ export class MarkdownNotFoundError extends Error {
   }
 }
 
+const PUBLIC_PATH_PREFIX = "/public/";
+
+function rewritePublicPath(value: unknown): string | string[] | undefined {
+  if (typeof value === "string") {
+    if (!value.startsWith(PUBLIC_PATH_PREFIX)) {
+      return undefined;
+    }
+
+    return value.replace(/^\/public\//u, "/");
+  }
+
+  if (Array.isArray(value)) {
+    let mutated = false;
+    const nextValues = value.map((entry) => {
+      if (typeof entry === "string" && entry.startsWith(PUBLIC_PATH_PREFIX)) {
+        mutated = true;
+        return entry.replace(/^\/public\//u, "/");
+      }
+
+      return entry;
+    });
+
+    return mutated ? nextValues : undefined;
+  }
+
+  return undefined;
+}
+
+function rehypeRewritePublicPaths() {
+  return (tree: Root) => {
+    visit(tree, "element", (node: Element) => {
+      const { properties } = node;
+
+      if (!properties) {
+        return;
+      }
+
+      for (const attribute of ["src", "href"] as const) {
+        const updated = rewritePublicPath(properties[attribute]);
+
+        if (updated !== undefined) {
+          properties[attribute] = updated;
+        }
+      }
+    });
+  };
+}
+
 const markdownProcessor = remark()
   .use(remarkGfm)
   .use(remarkRehype)
   .use(rehypeRaw)
+  .use(rehypeRewritePublicPaths)
   .use(rehypeSanitize, defaultSchema)
   .use(rehypeSlug)
   .use(rehypeStringify);

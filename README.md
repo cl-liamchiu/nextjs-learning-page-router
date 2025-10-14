@@ -64,3 +64,9 @@ During development:
 3. Visit the corresponding route (e.g., `/hello-world`).
 
 The home page lists all Markdown entries with their summaries for quick navigation.
+
+### Referencing Static Assets
+
+- Place images or downloads under the project's `public/` directory.
+- In Markdown, reference them with site-root paths such as `![Alt text](/asset-name.png)`.
+- Avoid prefixing paths with `/public/`; the build pipeline rewrites legacy references, but following the root-relative pattern prevents broken links and keeps authored content consistent.

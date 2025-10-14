@@ -12,6 +12,8 @@ import {
 
 const TEMP_INVALID_SLUG = "__invalid-front-matter-test";
 const TEMP_INVALID_PATH = path.join(CONTENT_DIR, `${TEMP_INVALID_SLUG}.md`);
+const TEMP_ASSET_SLUG = "__asset-path-rewrite-test";
+const TEMP_ASSET_PATH = path.join(CONTENT_DIR, `${TEMP_ASSET_SLUG}.md`);
 
 async function createInvalidMarkdownFixture() {
   const invalidSource = `---\ntitle: Missing summary\ndate: "2025-10-02"\n---\n\n# Heading\n`;
@@ -22,19 +24,38 @@ async function cleanupInvalidMarkdownFixture() {
   await fs.rm(TEMP_INVALID_PATH, { force: true });
 }
 
+async function createAssetPathMarkdownFixture() {
+  const source = `---
+title: Asset Path Rewrite
+date: "2025-10-14"
+summary: "Ensures /public prefixes are normalized"
+---
+
+![Screenshot](/public/example.png)
+
+[Download](/public/example.pdf)
+`;
+
+  await fs.writeFile(TEMP_ASSET_PATH, source, "utf8");
+}
+
+async function cleanupAssetPathMarkdownFixture() {
+  await fs.rm(TEMP_ASSET_PATH, { force: true });
+}
+
 describe("content markdown helpers", () => {
   it("lists markdown slugs in the content directory", async () => {
     const slugs = await listMarkdownSlugs();
 
-    expect(slugs).toContain("example");
+    expect(slugs).toContain("app-vs-page");
     expect(slugs.every((slug) => !slug.endsWith(".md"))).toBe(true);
   });
 
   it("loads markdown content with metadata", async () => {
-    const result = await loadMarkdown("example");
+    const result = await loadMarkdown("app-vs-page");
 
     expect(result.meta).toMatchObject({
-      slug: "example",
+      slug: "app-vs-page",
       title: expect.any(String),
       summary: expect.any(String),
     });
@@ -56,6 +77,20 @@ describe("content markdown helpers", () => {
       );
     } finally {
       await cleanupInvalidMarkdownFixture();
+    }
+  });
+
+  it("rewrites /public/ asset prefixes to root-relative paths", async () => {
+    await createAssetPathMarkdownFixture();
+
+    try {
+      const result = await loadMarkdown(TEMP_ASSET_SLUG);
+
+      expect(result.html).toContain('src="/example.png"');
+      expect(result.html).toContain('href="/example.pdf"');
+      expect(result.html).not.toContain("/public/");
+    } finally {
+      await cleanupAssetPathMarkdownFixture();
     }
   });
 });
